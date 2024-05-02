@@ -1,8 +1,11 @@
 name: Daily P&L Notification
 on:
+  # Run seven days a week at 10:00 PM UTC = 8:00 AM AEST
   schedule:
-    # Run seven days a week at 10:00 PM UTC = 8:00 AM AEST
     - cron: "0 22 * * *"
+
+  # Enables the option to manually trigger - delete the following line if not needed
+  workflow_dispatch:
 
 jobs:
   run:

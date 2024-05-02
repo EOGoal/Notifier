@@ -101,7 +101,6 @@ function formatMoney(input: Decimal): string {
 }
 
 const message = `${percentage}% · ${formatMoney(total)} of $1,500k goal`;
-console.log(message);
 
 // 3. Send push notification
 import axios from "axios";
@@ -110,8 +109,6 @@ async function sendPushoverNotification(params: {
   title: string;
   message: string;
 }) {
-  console.log(params);
-
   await axios.post("https://api.pushover.net/1/messages.json", {
     token: pushoverToken,
     user: pushoverUser,
@@ -120,3 +117,5 @@ async function sendPushoverNotification(params: {
 }
 
 await sendPushoverNotification({ title: `${percentage}% to EO Goal`, message });
+
+console.log("Sent notification");

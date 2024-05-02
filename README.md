@@ -8,7 +8,7 @@ The data comes directly from the "Total Income" line Profit and Loss report in X
 
 ### How It Looks
 
-[Add Screenshot Here]
+![Sample Screenshot](https://i.imgur.com/QNFAh5y.jpeg?raw=true)
 
 ### Requirements
 
@@ -22,14 +22,12 @@ The data comes directly from the "Total Income" line Profit and Loss report in X
 
 #### GitHub Account
 
-GitHub is a code management service by Microsoft. We're using it to duplicate the template for this notification code and to run it on a daily schedule.
+GitHub is a code management service by Microsoft. We're using it to create your own private copy of this notification app and to run it on a daily schedule.
 
 1. Create a free GitHub account
 2. Click on [Use this template](https://github.com/new?template_name=RevenueNotification&template_owner=winterec) to duplicate this template into your own private copy.
-
-   - Make sure to select the private option, make the repository name anything you like
-
-3. Click _Settings_ -> _Secrets and variables_ -> _Actions_, then click _New Repository Secret_
+   - Make sure to select the private option, make the repository name anything you like.
+3. Click _Settings_ -> _Secrets and variables_ -> _Actions_, then click _New Repository Secret_.
 
 Leave this page open. Through the rest of the guide we'll add the four configuration tokens needed to connect to Xero and send a push notification.
 
@@ -39,9 +37,7 @@ Leave this page open. Through the rest of the guide we'll add the four configura
 
 1. Go to https://connect.xero.com/custom to purchase a Xero Custom Connection
 2. Follow steps 1-4 of https://developer.xero.com/documentation/guides/oauth2/custom-connections/
-
-- For step 2, only check the `accounting.report.read` permission as it's the only one required.
-
+   - For step 2, only check the `accounting.reports.read` permission as it's the only one required.
 3. Back in GitHub, save the Client ID as `XERO_CLIENT_ID`, and the Client Secret as `XERO_CLIENT_SECRET`.
 
 #### Pushover App
@@ -49,13 +45,13 @@ Leave this page open. Through the rest of the guide we'll add the four configura
 1. Sign up to https://pushover.net/ and install the app on your mobile or desktop.
    - There is a 30 day trial and then it's a one off $5 USD for a lifetime account.
 2. At the top right of the page you will find _Your User Key_, save that in GitHub as `PUSHOVER_USER`.
-3. Click in to _Create an Application/API Token_
+3. Click in to _Create an Application/API Token_.
    - For the name, use "EO Progress" or similar.
    - For the icon, feel free to use this EO Logo: https://pushover.net/icons/5rfvoyps4pxhopu.png
 4. Click into the EO Progress app you just created and copy the _API Token/Key_, save that in GitHub as `PUSHOVER_TOKEN`.
 
 ### Testing
 
-The app is configured to run at 8:00 AM daily in Brisbane time so expect a notification tomorrow morning.
+To test it out, go back to GitHub, click on Actions, then click _EO Goal Daily Notification_ and click _Run workflow_.
 
-You can also manually run it by going to GitHub > Actions > Daily P&L Notification and clicking Run workflow.
+The app is configured to run at 8:00 AM daily in Brisbane time so expect a notification tomorrow morning.

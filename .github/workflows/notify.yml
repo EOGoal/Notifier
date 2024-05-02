@@ -1,0 +1,22 @@
+name: Daily P&L Notification
+on:
+  schedule:
+    # Run seven days a week at 10:00 PM UTC = 8:00 AM AEST
+    - cron: "0 22 * * *"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v1
+      - run: bun install --frozen-lockfile
+
+      - name: Run
+        run: bun index.ts
+        env:
+          TZ: "Australia/Brisbane"
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
+          XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}

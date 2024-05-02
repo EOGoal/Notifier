@@ -1,0 +1,17 @@
+{
+  "name": "eo-revenue",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
+    "decimal.js": "^10.4.3",
+    "xero-node": "^5.1.0"
+  }
+}

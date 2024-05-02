@@ -1,6 +1,8 @@
 {
-  "name": "eo-revenue",
+  "name": "eo-goal",
   "module": "index.ts",
+  "private": true,
+  "license": "MIT",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"

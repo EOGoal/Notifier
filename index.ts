@@ -39,7 +39,6 @@ async function getProfitAndLoss(
   fromDate: string,
   toDate: string
 ): Promise<ProfitAndLossReport> {
-  // TODO: Refactor into Xero service including retry logic
   let res: Awaited<ReturnType<AccountingApi["getReportTrialBalance"]>>;
   try {
     res = await xero.accountingApi.getReportProfitAndLoss("", fromDate, toDate);

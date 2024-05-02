@@ -1,4 +1,4 @@
-name: Daily P&L Notification
+name: EO Goal Daily Notification
 on:
   # Run seven days a week at 10:00 PM UTC = 8:00 AM AEST
   schedule:

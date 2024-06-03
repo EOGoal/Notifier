@@ -1,8 +1,9 @@
 {
-  "name": "eo-goal",
+  "name": "notifier",
   "module": "index.ts",
   "private": true,
   "license": "MIT",
+  "version": "0.0.1",
   "type": "module",
   "devDependencies": {
     "@types/bun": "latest"
@@ -15,5 +16,16 @@
     "date-fns": "^3.6.0",
     "decimal.js": "^10.4.3",
     "xero-node": "^5.1.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "printWidth": 120,
+    "bracketSpacing": false,
+    "useTabs": false,
+    "tabWidth": 2,
+    "arrowParens": "avoid",
+    "endOfLine": "lf",
+    "insertFinalNewline": true
   }
 }

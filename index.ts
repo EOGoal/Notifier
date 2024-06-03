@@ -121,7 +121,7 @@ if (hasPushover) {
 
   await sendPushoverNotification({title: `${percentage}% to EO Goal`, message});
 
-  console.log('Sent notification');
+  console.log('Sent notification to pushover');
 }
 
 // 4. Optional: fetch twelve months revenue from Xero and report to EO backend
@@ -211,10 +211,19 @@ if (hasEO) {
       throw new Error('Endpoint must be HTTPS');
     }
 
+    let report;
     try {
-      await axios.post(endpoint.toString(), postObj);
+      report = await axios.post(endpoint.toString(), postObj);
     } catch (e) {
       console.error(e);
+      return;
     }
+
+    if (report.status !== 200) {
+      console.log('Failed to send report');
+      return;
+    }
+
+    console.log('Sent report to EO backend');
   })();
 }

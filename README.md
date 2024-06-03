@@ -52,13 +52,13 @@ Leave this page open. Through the rest of the guide we'll add the four configura
 
 #### Optional: Report to EO
 
-There is an additional feature to also report the data to one's EO chapter in a shared spreadsheet. This would share your data with your program peers, accountability group, and coach.
+There is an additional feature to also report the data to ones EO chapter in a shared spreadsheet. This would share your top line revenue data with your program peers, accountability group, and coach.
 
-If this option is enabled, then the rolling twelve months revenue and additionally twelve months of revenue on a monthly basis will also be reported to a shared spreadsheet.
+If this option is enabled, then the rolling twelve months revenue and additionally twelve months of revenue on a monthly basis will be reported to a shared spreadsheet.
 
 This feature is disabled by default. To opt-in, add these two extra variables to your repository secrets:
 
-1. `EO_NAME`: your first and last name. If you have multiple businesses you can connect each of them using the same `EO_NAME` and it will be aggregated in one row of the spreadsheet
+1. `EO_NAME`: your first and last name. If you have multiple businesses you can connect each of them using the same `EO_NAME` and then the data across all your businesses will be aggregated into a single row with the total revenue.
 2. `EO_CHAPTER`: The name of your chapter. Currently the only implemented option is "Queensland".
 
 ### Testing

@@ -2,7 +2,7 @@ name: EO Goal Daily Notification
 on:
   # Run seven days a week at 10:00 PM UTC = 8:00 AM AEST
   schedule:
-    - cron: "0 22 * * *"
+    - cron: '0 22 * * *'
 
   # Enables the option to manually trigger - delete the following line if not needed
   workflow_dispatch:
@@ -18,8 +18,10 @@ jobs:
       - name: Run
         run: bun index.ts
         env:
-          TZ: "Australia/Brisbane"
+          TZ: 'Australia/Brisbane'
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
           XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
           XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
+          EO_NAME: ${{ secrets.EO_NAME }}
+          EO_CHAPTER: ${{ secrets.EO_CHAPTER }}

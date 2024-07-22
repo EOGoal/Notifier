@@ -132,50 +132,51 @@ if (hasEO) {
   async function getTwelveMonthsRevenue(
     xeroRef: XeroClient
   ): Promise<{companyName: string; data: {month: string; amount: Decimal}[]}> {
-    const lastMonth = subMonths(new Date(), 1);
+    /* Note that due to severe shortcomings in Xero's API, we can only fetch 12 months of data directly if the final month is 31 days long. */
 
-    const startOfLastMonth = format(startOfMonth(lastMonth), 'yyyy-MM-dd');
-    const endOfLastMonth = format(endOfMonth(lastMonth), 'yyyy-MM-dd');
-
-    let res: Awaited<ReturnType<AccountingApi['getReportTrialBalance']>>;
-    try {
-      res = await xero.accountingApi.getReportProfitAndLoss('', startOfLastMonth, endOfLastMonth, 11, 'MONTH');
-    } catch (e) {
-      if (typeof e === 'string' && JSON.parse(e as any)?.response?.statusCode === 429) {
-        await new Promise(r => setTimeout(r, 2000));
-        return getTwelveMonthsRevenue(xeroRef);
-      }
-
-      throw e;
-    }
-
-    if (res?.body?.reports?.[0]?.rows == null) {
-      throw new Error('Empty response from Xero');
-    }
-
-    const companyName = res.body.reports?.[0]?.reportTitles?.[1] as string;
-
-    // Sanity check that we have the 12 months of data we expect
-    const headerRow = res.body.reports[0].rows?.[0];
-    const summaryRow = res.body.reports[0].rows
-      ?.find(x => x.title === 'Income')
-      ?.rows?.find(x => x.rowType === RowType.SummaryRow);
-
-    assert.ok(headerRow.rowType === RowType.Header);
-    assert.ok(summaryRow != null);
-    assert.ok(headerRow.cells?.length === 13);
-    assert.ok(summaryRow.cells?.length === 13);
-
+    let companyName: string = '';
     const data = [];
 
     for (let i = 0; i < 12; i++) {
-      const endOfMonthObj = endOfMonth(subMonths(new Date(), i + 1));
+      const lastMonth = subMonths(new Date(), i + 1);
+      const startOfLastMonth = format(startOfMonth(lastMonth), 'yyyy-MM-dd');
+      const endOfMonthObj = endOfMonth(lastMonth);
+      const endOfLastMonth = format(endOfMonthObj, 'yyyy-MM-dd');
 
-      assert.ok(headerRow.cells?.[i + 1].value === format(endOfMonthObj, 'dd MMM yy'));
+      let res;
+      try {
+        res = await xero.accountingApi.getReportProfitAndLoss('', startOfLastMonth, endOfLastMonth);
+      } catch (e) {
+        if (typeof e === 'string' && JSON.parse(e as any)?.response?.statusCode === 429) {
+          await new Promise(r => setTimeout(r, 2000));
+          return getTwelveMonthsRevenue(xeroRef);
+        }
+
+        throw e;
+      }
+
+      if (res?.body?.reports?.[0]?.rows == null) {
+        throw new Error('Empty response from Xero');
+      }
+
+      companyName = res.body.reports?.[0]?.reportTitles?.[1] as string;
+
+      // Sanity check that we have the 12 months of data we expect
+      const headerRow = res.body.reports[0].rows?.[0];
+      const summaryRow = res.body.reports[0].rows
+        ?.find(x => x.title === 'Income')
+        ?.rows?.find(x => x.rowType === RowType.SummaryRow);
+
+      assert.ok(headerRow.rowType === RowType.Header);
+      assert.ok(summaryRow != null);
+      assert.ok(headerRow.cells?.length === 2);
+      assert.ok(summaryRow.cells?.length === 2);
+
+      assert.ok(headerRow.cells?.[1].value === format(endOfMonthObj, 'dd MMM yy'));
 
       data.push({
         month: format(endOfMonthObj, 'yyyy-MM'),
-        amount: new Decimal(summaryRow.cells?.[i + 1].value as string),
+        amount: new Decimal(summaryRow.cells?.[1].value as string),
       });
     }
 
